@@ -1,14 +1,53 @@
 #:kivy 2.3.0
+
 <Gerenciador>:
-    Screen:
-        Button:
-            text: 'Ver tarefas'
-            on_release: root.current = 'tarefas'
+    Menu:
+        name: 'menu'
     Tarefas:
+
+<Menu>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 40]  # Mantém o menu centralizado, adaptado a diferentes tamanhos de tela
+        spacing: 20
+        BoxLayout:
+            size_hint_y: 0.5  # Aumenta a responsividade da imagem
+            Image:
+                source: 'task_logo.png'
+                allow_stretch: True
+                keep_ratio: True
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 0.5
+            spacing: 10
+            Button:
+                text: 'Tarefas'
+                size_hint_y: None
+                height: 50
+                on_release: app.root.current = 'tarefas'
+            Button:
+                text: 'Assistente'
+                size_hint_y: None
+                height: 50
+            Button:
+                text: 'Sair'
+                size_hint_y: None
+                height: 50
+                on_release: app.stop()
+
 <Tarefas>:
     name: 'tarefas'
     BoxLayout:
         orientation: 'vertical'
+        ActionBar:
+            ActionView:
+                ActionPrevious:
+                    title:'Tarefas'
+                    on_release: app.root.current = 'menu'
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
         ScrollView:
             BoxLayout:
                 id: box
@@ -30,7 +69,7 @@
 
 <Tarefa>:
     size_hint_y: None
-    height: 60  # Mantém altura consistente
+    height: 60
     BoxLayout:
         Label:
             id: label
